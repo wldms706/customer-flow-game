@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="tSQvySgJkJUBc41PGoCyhoHyDtQWnI4lkRA5RvFphhs" />
+    <title>정숙의 여정 - 고객은 어떻게 예약할까?</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 캐릭터 고정 헤더 -->
+    <div class="character-header" id="characterHeader">
+        <div class="character-avatar">👩</div>
+        <div class="character-info">
+            <span class="character-name">검색하는 정숙</span>
+            <span class="character-status" id="characterStatus">눈썹문신 알아보는 중...</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- STEP 1: 인트로 화면 -->
+        <div id="step1" class="step active">
+            <div class="intro-content">
+                <div class="thought-bubble">
+                    <p>"눈썹문신 하고 싶은데... 어디가 좋을까?"</p>
+                </div>
+                <div class="customer-icon">👩</div>
+                <h1>정숙의 여정을 따라가 보세요</h1>
+                <p class="question">정숙는 어디서 매장을 발견했을까요?</p>
+
+                <div class="button-group">
+                    <button class="choice-btn" data-choice="naver">
+                        <span class="btn-icon">📍</span>
+                        네이버 검색
+                    </button>
+                    <button class="choice-btn" data-choice="instagram">
+                        <span class="btn-icon">📷</span>
+                        인스타그램
+                    </button>
+                    <button class="choice-btn" data-choice="referral">
+                        <span class="btn-icon">🤝</span>
+                        지인 소개
+                    </button>
+                    <button class="choice-btn" data-choice="kakao">
+                        <span class="btn-icon">💬</span>
+                        카카오톡
+                    </button>
+                    <button class="choice-btn" data-choice="unknown">
+                        <span class="btn-icon">❓</span>
+                        모르겠음
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 2: 고객 여정 시각화 (노드 기반) -->
+        <div id="step2" class="step">
+            <div class="journey-content">
+                <div class="journey-title">
+                    <h2>정숙의 여정</h2>
+                    <p class="journey-subtitle">각 단계에서 확률이 줄어듭니다</p>
+                </div>
+
+                <!-- 캐릭터 생각 말풍선 -->
+                <div class="thought-bubble journey-thought" id="journeyThought">
+                    <p id="currentThought">"오잉? 여기 눈썹문신 하는 곳이네?"</p>
+                </div>
+
+                <!-- 노드 기반 여정 맵 -->
+                <div class="journey-map" id="journeyMap">
+                    <!-- 동적으로 생성됨 -->
+                </div>
+
+                <!-- 이탈률 표시 -->
+                <div class="survival-indicator" id="survivalIndicator">
+                    <div class="survival-bar">
+                        <div class="survival-fill" id="survivalFill"></div>
+                    </div>
+                    <span class="survival-text" id="survivalText">100명 중 100명 남음</span>
+                </div>
+
+                <button class="next-btn" id="toStep3">다음으로</button>
+            </div>
+        </div>
+
+        <!-- STEP 3: 통제 영역 강조 -->
+        <div id="step3" class="step">
+            <div class="control-content">
+                <div class="thought-bubble">
+                    <p id="controlThought">"여긴 믿어도 되나...?"</p>
+                </div>
+                <h2>이 여정 중<br>원장님이 설계할 수 있는 건?</h2>
+                <div class="journey-map control-view" id="controlContainer">
+                    <!-- 동적으로 생성됨 -->
+                </div>
+                <div class="legend">
+                    <span class="legend-item"><span class="icon-uncontrol">❌</span> 정숙 마음대로 (통제 불가)</span>
+                    <span class="legend-item"><span class="icon-control">⭕</span> 원장님이 설계 가능</span>
+                </div>
+                <button class="next-btn" id="toStep4">다음으로</button>
+            </div>
+        </div>
+
+        <!-- STEP 4: 시스템 유무 비교 -->
+        <div id="step4" class="step">
+            <div class="compare-content">
+                <div class="thought-bubble">
+                    <p>"다른 곳도 알아볼까... 아니면 여기로 할까..."</p>
+                </div>
+                <h2>정숙가 이탈하는 매장 vs 예약하는 매장</h2>
+                <div class="compare-container">
+                    <div class="compare-box no-system">
+                        <h3>설계 ❌ 매장</h3>
+                        <div class="compare-flow">
+                            <div class="compare-step">발견</div>
+                            <div class="compare-arrow">↓</div>
+                            <div class="compare-step">탐색</div>
+                            <div class="compare-arrow">↓</div>
+                            <div class="compare-step end">
+                                <span>이탈</span>
+                                <small>"다른 데 알아볼게요"</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="compare-box has-system">
+                        <h3>설계 ⭕ 매장</h3>
+                        <div class="compare-flow">
+                            <div class="compare-step highlight">발견</div>
+                            <div class="compare-arrow">↓</div>
+                            <div class="compare-step highlight">탐색</div>
+                            <div class="compare-arrow">↓</div>
+                            <div class="compare-step highlight">검증</div>
+                            <div class="compare-arrow">↓</div>
+                            <div class="compare-step highlight">확신</div>
+                            <div class="compare-arrow">↓</div>
+                            <div class="compare-step highlight success">
+                                <span>예약</span>
+                                <small>"여기로 할게요!"</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="next-btn" id="toStep5">다음으로</button>
+            </div>
+        </div>
+
+        <!-- STEP 5: 인식 전환 문장 -->
+        <div id="step5" class="step">
+            <div class="final-content">
+                <div class="thought-bubble final-thought">
+                    <p>"..."</p>
+                </div>
+                <div class="final-message">
+                    <p class="message-line">정숙는 한 번에 결정하지 않습니다.</p>
+                    <p class="message-line">확신은 여러 단계에서 누적됩니다.</p>
+                    <p class="message-line highlight-text">설계되지 않으면, 정숙는 조용히 이탈합니다.</p>
+                </div>
+                <button class="restart-btn" id="restart">처음부터 다시하기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================
+         채널 역할 요약 섹션
+         ========================= -->
+    <section id="system-bridge" class="bridge">
+        <div class="bridge-wrap">
+            <div class="bridge-head">
+                <p class="bridge-kicker">결론</p>
+                <h2 class="bridge-title">
+                    블로그도, 인스타도, 광고도 "다" 해야 합니다.<br />
+                    문제는 <span class="hl">각 채널이 맡아야 할 역할</span>을 모르고 섞어 쓰는 거예요.
+                </h2>
+                <p class="bridge-sub">
+                    고객은 한 번에 결정하지 않습니다. 여러 단계에서 확신이 누적되고,
+                    <span class="hl2">하나라도 비면 조용히 이탈</span>합니다.
+                </p>
+            </div>
+
+            <!-- 고객 여정 미니 퍼널 -->
+            <div class="journey-funnel">
+                <div class="funnel-title">고객의 머릿속 실제 흐름</div>
+                <div class="funnel-rail" role="list" aria-label="customer journey">
+                    <div class="funnel-step" role="listitem">
+                        <div class="funnel-badge">1</div>
+                        <div class="funnel-body">
+                            <div class="funnel-name">발견</div>
+                            <div class="funnel-desc">검색/광고로 "존재"를 알게 됨</div>
+                        </div>
+                    </div>
+                    <div class="funnel-step" role="listitem">
+                        <div class="funnel-badge">2</div>
+                        <div class="funnel-body">
+                            <div class="funnel-name">탐색</div>
+                            <div class="funnel-desc">프로필/홈페이지/후기 훑기</div>
+                        </div>
+                    </div>
+                    <div class="funnel-step" role="listitem">
+                        <div class="funnel-badge">3</div>
+                        <div class="funnel-body">
+                            <div class="funnel-name">검증</div>
+                            <div class="funnel-desc">전후/기준/데이터로 의심 해소</div>
+                        </div>
+                    </div>
+                    <div class="funnel-step" role="listitem">
+                        <div class="funnel-badge">4</div>
+                        <div class="funnel-body">
+                            <div class="funnel-name">확신</div>
+                            <div class="funnel-desc">"여기가 실패 확률이 낮다" 판단</div>
+                        </div>
+                    </div>
+                    <div class="funnel-step" role="listitem">
+                        <div class="funnel-badge">5</div>
+                        <div class="funnel-body">
+                            <div class="funnel-name">예약</div>
+                            <div class="funnel-desc">문의 → 예약 → 방문</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="prob-section">
+                    <div class="prob-left">
+                        <div class="prob-title">한 단계라도 빠지면?</div>
+                        <div class="prob-desc">
+                            "끝"이 아니라 <span class="hl2">확률이 줄어듭니다.</span><br />
+                            누적되면 체감상 '손님이 안 오는' 상태가 됩니다.
+                        </div>
+                    </div>
+
+                    <div class="prob-bars" aria-label="conversion probability">
+                        <div class="bar-row">
+                            <span class="bar-label">노출</span>
+                            <div class="bar"><i style="width:100%"></i></div>
+                            <span class="bar-val">100%</span>
+                        </div>
+                        <div class="bar-row">
+                            <span class="bar-label">클릭</span>
+                            <div class="bar"><i style="width:40%"></i></div>
+                            <span class="bar-val">40%</span>
+                        </div>
+                        <div class="bar-row">
+                            <span class="bar-label">체류</span>
+                            <div class="bar"><i style="width:25%"></i></div>
+                            <span class="bar-val">25%</span>
+                        </div>
+                        <div class="bar-row">
+                            <span class="bar-label">문의</span>
+                            <div class="bar"><i style="width:8%"></i></div>
+                            <span class="bar-val">8%</span>
+                        </div>
+                        <div class="bar-row">
+                            <span class="bar-label">예약</span>
+                            <div class="bar"><i style="width:3%"></i></div>
+                            <span class="bar-val">3%</span>
+                        </div>
+
+                        <button class="prob-btn" type="button" id="breakOne">
+                            "하나 삐끗" 시뮬레이션 보기
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 채널 역할 카드 -->
+            <div class="channels">
+                <h3 class="channels-title">그래서 채널별 역할은 이렇게 나뉩니다</h3>
+
+                <div class="channel-cards">
+                    <article class="channel-card">
+                        <div class="card-top">
+                            <span class="card-tag">DISCOVERY</span>
+                            <h4 class="card-title">인스타 = 발견</h4>
+                        </div>
+                        <p class="card-body">
+                            설명하려고 애쓰는 곳이 아니라,<br />
+                            <span class="hl">"아, 또 저기네"</span>를 만드는 반복 노출 장치.
+                        </p>
+                        <ul class="card-list">
+                            <li>짧은 메시지</li>
+                            <li>일관된 캐릭터</li>
+                            <li>결과 중심</li>
+                        </ul>
+                    </article>
+
+                    <article class="channel-card">
+                        <div class="card-top">
+                            <span class="card-tag">VALIDATION</span>
+                            <h4 class="card-title">블로그 = 검증</h4>
+                        </div>
+                        <p class="card-body">
+                            홍보가 아니라 <span class="hl">의심을 해소</span>하는 공간.<br />
+                            "여기 믿어도 되나?"를 끝내야 예약이 됩니다.
+                        </p>
+                        <ul class="card-list">
+                            <li>전/후 + 기준 설명</li>
+                            <li>실패 리스크 해소</li>
+                            <li>일관된 논리</li>
+                        </ul>
+                    </article>
+
+                    <article class="channel-card">
+                        <div class="card-top">
+                            <span class="card-tag">RECOVERY</span>
+                            <h4 class="card-title">광고 = 확률 회복</h4>
+                        </div>
+                        <p class="card-body">
+                            신규만 찾는 게 아니라,<br />
+                            <span class="hl">이탈한 사람을 다시 데려오는</span> 확률 복구 장치.
+                        </p>
+                        <ul class="card-list">
+                            <li>픽셀 기반 추적</li>
+                            <li>리타겟 구조</li>
+                            <li>행동별 타겟 분리</li>
+                        </ul>
+                    </article>
+                </div>
+
+                <div class="bridge-quote">
+                    <p>
+                        손님이 없는 게 아니라,<br />
+                        <span class="hl2">올 수 있었던 손님을 단계마다 조금씩 흘려보내는 중</span>입니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================
+         단계별 실행 가이드 섹션
+         ========================= -->
+    <section id="execution-guide" class="guide-section">
+        <div class="guide-wrap">
+            <div class="guide-header">
+                <p class="guide-kicker">실행</p>
+                <h2 class="guide-title">그래서, 단계별로 이렇게 해야 합니다</h2>
+            </div>
+
+            <div class="guide-blocks">
+                <!-- 블로그 -->
+                <div class="guide-block">
+                    <div class="block-number">1</div>
+                    <div class="block-content">
+                        <div class="block-header">
+                            <span class="block-tag validation">VALIDATION</span>
+                            <h3 class="block-title">블로그 = 검증 단계</h3>
+                        </div>
+                        <p class="block-desc">
+                            블로그는 홍보가 아니라 <strong>의심을 해소하는 장치</strong>입니다.<br />
+                            이 단계가 비어 있으면 고객은 조용히 이탈합니다.
+                        </p>
+
+                        <div class="block-types">
+                            <div class="type-item">
+                                <span class="type-name">체험단</span>
+                                <span class="type-desc">돈 주고 후기 수량 확보</span>
+                            </div>
+                            <div class="type-item">
+                                <span class="type-name">기자단</span>
+                                <span class="type-desc">사진 제공 → 배포</span>
+                            </div>
+                            <div class="type-item highlight">
+                                <span class="type-name">자사 블로그</span>
+                                <span class="type-desc">돈 안 듦, 대신 주 2회 필수</span>
+                            </div>
+                        </div>
+
+                        <div class="block-warning">
+                            <p>
+                                체험단이 문제인 게 아니라,<br />
+                                <strong>자사 블로그가 없으면 검증 단계에서 탈락</strong>합니다.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 인스타그램 -->
+                <div class="guide-block">
+                    <div class="block-number">2</div>
+                    <div class="block-content">
+                        <div class="block-header">
+                            <span class="block-tag discovery">DISCOVERY</span>
+                            <h3 class="block-title">인스타그램 = 발견 & 반복 노출</h3>
+                        </div>
+                        <p class="block-desc">
+                            인스타는 설득하는 곳이 아닙니다.<br />
+                            <strong>계속 보이게 만드는 장치</strong>입니다.
+                        </p>
+
+                        <div class="block-checklist">
+                            <div class="check-item">
+                                <span class="check-icon">✓</span>
+                                <span>카드뉴스(캐러셀) 중심</span>
+                            </div>
+                            <div class="check-item">
+                                <span class="check-icon">✓</span>
+                                <span>한 장 = 한 메시지</span>
+                            </div>
+                            <div class="check-item">
+                                <span class="check-icon">✓</span>
+                                <span>예쁨보다 이해</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 광고 -->
+                <div class="guide-block">
+                    <div class="block-number">3</div>
+                    <div class="block-content">
+                        <div class="block-header">
+                            <span class="block-tag recovery">RECOVERY</span>
+                            <h3 class="block-title">광고 = 확률 회복</h3>
+                        </div>
+                        <p class="block-desc">
+                            광고는 신규 손님을 찾는 게 아니라<br />
+                            <strong>이탈한 확률을 다시 끌어올리는 구조</strong>입니다.
+                        </p>
+
+                        <p class="block-sub">
+                            가장 좋은 포맷은 <strong class="hl">릴스</strong>이고,<br />
+                            구조는 아래 순서가 필수입니다.
+                        </p>
+
+                        <div class="reels-flow">
+                            <span class="flow-item">후킹</span>
+                            <span class="flow-arrow">→</span>
+                            <span class="flow-item">문제제기</span>
+                            <span class="flow-arrow">→</span>
+                            <span class="flow-item">해결책</span>
+                            <span class="flow-arrow">→</span>
+                            <span class="flow-item">반박제거</span>
+                            <span class="flow-arrow">→</span>
+                            <span class="flow-item cta">CTA</span>
+                        </div>
+
+                        <div class="block-warning">
+                            <p>
+                                이 구조 없이 돌리는 광고는<br />
+                                <strong>그냥 돈이 사라집니다.</strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+    <script>
+        // "하나 삐끗" 시뮬레이션
+        (function () {
+            const btn = document.getElementById("breakOne");
+            if (!btn) return;
+
+            let toggled = false;
+
+            btn.addEventListener("click", () => {
+                const rows = document.querySelectorAll("#system-bridge .bar-row .bar i");
+                const vals = document.querySelectorAll("#system-bridge .bar-row .bar-val");
+                if (!rows.length || !vals.length) return;
+
+                if (!toggled) {
+                    const widths = ["100%", "32%", "12%", "3%", "1%"];
+                    const numbers = ["100%", "32%", "12%", "3%", "1%"];
+                    rows.forEach((el, idx) => (el.style.width = widths[idx] || el.style.width));
+                    vals.forEach((el, idx) => (el.textContent = numbers[idx] || el.textContent));
+                    btn.textContent = "원래 상태로 돌리기";
+                    toggled = true;
+                } else {
+                    const widths = ["100%", "40%", "25%", "8%", "3%"];
+                    const numbers = ["100%", "40%", "25%", "8%", "3%"];
+                    rows.forEach((el, idx) => (el.style.width = widths[idx] || el.style.width));
+                    vals.forEach((el, idx) => (el.textContent = numbers[idx] || el.textContent));
+                    btn.textContent = ""하나 삐끗" 시뮬레이션 보기";
+                    toggled = false;
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
