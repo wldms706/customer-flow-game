@@ -104,8 +104,10 @@ body {
     padding: 20px;
     min-height: calc(100vh - 70px);
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
+    padding-top: 30px;
+    padding-bottom: 40px;
 }
 
 /* Step 기본 스타일 */
@@ -133,6 +135,142 @@ body {
 /* STEP 1: 인트로 화면 */
 .intro-content {
     text-align: center;
+}
+
+/* 시작 문구 - 문제 인식 유도 */
+.hook-section {
+    margin-bottom: 30px;
+    padding: 24px;
+    background: rgba(252, 129, 129, 0.08);
+    border: 1px solid rgba(252, 129, 129, 0.2);
+    border-radius: 20px;
+}
+
+.hook-text {
+    font-size: 18px;
+    line-height: 1.6;
+    margin: 0 0 16px;
+    font-weight: 600;
+}
+
+.hook-question {
+    padding: 16px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+}
+
+.hook-question p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.hook-question p:first-child {
+    color: #a0aec0;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+/* 게임 목적 선언 */
+.game-purpose {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: rgba(79, 209, 197, 0.08);
+    border: 1px solid rgba(79, 209, 197, 0.2);
+    border-radius: 16px;
+}
+
+.purpose-title {
+    font-size: 14px;
+    color: #a0aec0;
+    margin: 0 0 12px;
+}
+
+.purpose-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 16px;
+    text-align: left;
+}
+
+.purpose-list li {
+    font-size: 15px;
+    line-height: 1.8;
+    padding-left: 8px;
+}
+
+.purpose-list li strong {
+    color: #4fd1c5;
+}
+
+.purpose-result {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.5;
+    font-weight: 600;
+}
+
+/* 5단계 설명 카드 */
+.steps-overview {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.step-card {
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    text-align: left;
+    transition: all 0.3s ease;
+}
+
+.step-card:hover {
+    border-color: rgba(79, 209, 197, 0.3);
+    transform: translateX(5px);
+}
+
+.step-num {
+    font-size: 10px;
+    font-weight: 700;
+    color: #4fd1c5;
+    letter-spacing: 0.1em;
+    margin-bottom: 4px;
+}
+
+.step-name {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 8px;
+}
+
+.step-question {
+    font-size: 14px;
+    margin: 0 0 6px;
+    color: #e2e8f0;
+}
+
+.step-channels {
+    font-size: 12px;
+    color: #a0aec0;
+    margin: 0 0 8px;
+}
+
+.step-problem {
+    font-size: 13px;
+    margin: 0;
+    padding: 8px 12px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}
+
+/* 구분선 */
+.divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(79, 209, 197, 0.3), transparent);
+    margin: 20px 0;
 }
 
 .customer-icon {
@@ -386,6 +524,69 @@ body {
     font-size: 16px;
 }
 
+/* 통제 노드 래퍼 */
+.control-node-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+}
+
+/* 상세 설명 카드 */
+.control-detail {
+    width: 100%;
+    max-width: 320px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    text-align: left;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.4s ease;
+}
+
+.control-detail.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.control-detail.controllable {
+    background: rgba(72, 187, 120, 0.15);
+    border: 1px solid rgba(72, 187, 120, 0.3);
+}
+
+.control-detail.uncontrollable {
+    background: rgba(252, 129, 129, 0.1);
+    border: 1px solid rgba(252, 129, 129, 0.2);
+}
+
+.detail-reason {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 20px;
+    margin-bottom: 6px;
+}
+
+.control-detail.controllable .detail-reason {
+    background: rgba(72, 187, 120, 0.3);
+    color: #68d391;
+}
+
+.control-detail.uncontrollable .detail-reason {
+    background: rgba(252, 129, 129, 0.2);
+    color: #fc8181;
+}
+
+.detail-text {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #e2e8f0;
+    opacity: 0.9;
+}
+
 .legend {
     display: flex;
     flex-direction: column;
@@ -555,6 +756,71 @@ body {
     animation-delay: 1s;
 }
 
+/* 게임 결과물 안내 */
+.game-result-box {
+    margin: 30px 0;
+    padding: 24px;
+    background: rgba(79, 209, 197, 0.08);
+    border: 1px solid rgba(79, 209, 197, 0.25);
+    border-radius: 20px;
+    text-align: left;
+    animation: fadeIn 0.8s ease 1.5s both;
+}
+
+.result-title {
+    font-size: 16px;
+    color: #a0aec0;
+    margin: 0 0 16px;
+}
+
+.result-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px;
+}
+
+.result-list li {
+    font-size: 16px;
+    line-height: 2;
+    padding-left: 8px;
+}
+
+.result-list li strong {
+    color: #4fd1c5;
+}
+
+.result-conclusion {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    text-align: center;
+}
+
+.result-impact {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    text-align: center;
+}
+
+/* 컨설팅 연결 (프리세일즈) */
+.consulting-link {
+    margin: 30px 0;
+    padding: 24px;
+    background: linear-gradient(135deg, rgba(79, 209, 197, 0.15), rgba(72, 187, 120, 0.15));
+    border: 2px solid rgba(79, 209, 197, 0.4);
+    border-radius: 20px;
+    animation: fadeIn 0.8s ease 2s both;
+}
+
+.consulting-text {
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.6;
+    margin: 0;
+    text-align: center;
+}
+
 @keyframes messageReveal {
     from {
         opacity: 0;
@@ -695,6 +961,75 @@ body {
 
     .legend-item {
         font-size: 12px;
+    }
+
+    /* 시작 문구 모바일 */
+    .hook-section {
+        padding: 18px;
+    }
+
+    .hook-text {
+        font-size: 16px;
+    }
+
+    .hook-question p {
+        font-size: 14px;
+    }
+
+    /* 게임 목적 모바일 */
+    .game-purpose {
+        padding: 16px;
+    }
+
+    .purpose-list li {
+        font-size: 14px;
+    }
+
+    .purpose-result {
+        font-size: 15px;
+    }
+
+    /* 5단계 카드 모바일 */
+    .step-card {
+        padding: 14px;
+    }
+
+    .step-name {
+        font-size: 16px;
+    }
+
+    .step-question {
+        font-size: 13px;
+    }
+
+    .step-problem {
+        font-size: 12px;
+    }
+
+    /* 결과물 안내 모바일 */
+    .game-result-box {
+        padding: 18px;
+    }
+
+    .result-list li {
+        font-size: 14px;
+    }
+
+    .result-conclusion {
+        font-size: 16px;
+    }
+
+    .result-impact {
+        font-size: 14px;
+    }
+
+    /* 컨설팅 연결 모바일 */
+    .consulting-link {
+        padding: 18px;
+    }
+
+    .consulting-text {
+        font-size: 15px;
     }
 }
 
@@ -844,6 +1179,7 @@ body {
     border-radius: 14px;
     background: rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.08);
+    overflow: visible;
 }
 
 .bar-row {
@@ -883,6 +1219,7 @@ body {
 }
 
 .prob-btn {
+    display: block;
     width: 100%;
     margin-top: 14px;
     padding: 12px;
@@ -894,6 +1231,8 @@ body {
     font-weight: 700;
     font-size: 13px;
     transition: all 0.3s ease;
+    visibility: visible;
+    opacity: 1;
 }
 
 .prob-btn:hover {

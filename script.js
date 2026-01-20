@@ -27,8 +27,8 @@ const journeyThoughts = {
         { phase: '발견', thought: '"인스타에서 눈썹문신 찾아볼까"', action: '인스타 검색' },
         { phase: '노출', thought: '"오 이 피드 괜찮은데?"', action: '콘텐츠 발견' },
         { phase: '탐색', thought: '"프로필 한번 볼까..."', action: '프로필 클릭' },
-        { phase: '검증', thought: '"전후 사진 진짜인가?"', action: '홈페이지 방문' },
-        { phase: '확신', thought: '"여긴 믿어도 되겠다"', action: '카카오톡 문의' },
+        { phase: '검증', thought: '"네이버에 후기 있나 찾아봐야지"', action: '네이버 검색' },
+        { phase: '확신', thought: '"후기도 괜찮네, 문의해볼까"', action: '카카오톡 문의' },
         { phase: '행동', thought: '"여기로 할게요!"', action: '예약 완료' }
     ],
     referral: [
@@ -70,6 +70,150 @@ const controllability = {
     referral: [true, false, false, true, true],
     kakao: [false, false, true, true, true],
     unknown: [false, false, false, true, true]
+};
+
+// 통제 가능/불가능 상세 설명
+const controlDetails = {
+    instagram: [
+        {
+            controllable: true,
+            reason: '콘텐츠 기획 가능',
+            detail: '어떤 사진을 올릴지, 어떤 메시지를 전달할지 원장님이 결정합니다.'
+        },
+        {
+            controllable: false,
+            reason: '알고리즘이 결정',
+            detail: '인스타가 누구에게 노출할지 결정해요. 원장님은 기도만 할 수 있습니다.'
+        },
+        {
+            controllable: false,
+            reason: '정숙 마음대로',
+            detail: '클릭할지 말지는 정숙 맘이에요. 0.5초 안에 관심 없으면 스크롤합니다.'
+        },
+        {
+            controllable: true,
+            reason: '블로그/플레이스 관리',
+            detail: '네이버 검색 시 나오는 후기, 정보를 미리 세팅해둘 수 있어요.'
+        },
+        {
+            controllable: true,
+            reason: '응대 퀄리티 설계',
+            detail: '첫 답변 속도, 말투, 정보 제공 방식을 미리 준비할 수 있습니다.'
+        },
+        {
+            controllable: true,
+            reason: '예약 프로세스 설계',
+            detail: '예약 확정 멘트, 리마인드 문자, 사전 안내까지 설계 가능합니다.'
+        }
+    ],
+    naver: [
+        {
+            controllable: false,
+            reason: '정숙이 검색해야 시작',
+            detail: '정숙이 "눈썹문신"을 검색해야 게임이 시작돼요. 이건 기다릴 수밖에 없습니다.'
+        },
+        {
+            controllable: false,
+            reason: '네이버 알고리즘',
+            detail: '상위 노출은 네이버가 결정해요. 광고비를 써도 1등 보장은 없습니다.'
+        },
+        {
+            controllable: false,
+            reason: '정숙 마음대로',
+            detail: '리뷰를 볼지, 다른 샵을 볼지는 정숙 맘이에요.'
+        },
+        {
+            controllable: true,
+            reason: '정보/후기 관리',
+            detail: '플레이스 정보, 블로그 후기, 사진 퀄리티를 미리 준비할 수 있어요.'
+        },
+        {
+            controllable: true,
+            reason: '예약 응대 설계',
+            detail: '전화 응대 멘트, 예약 프로세스를 미리 세팅해둘 수 있습니다.'
+        }
+    ],
+    referral: [
+        {
+            controllable: true,
+            reason: '기존 고객 만족도',
+            detail: '추천은 만족한 고객에게서 나와요. 서비스 퀄리티가 핵심입니다.'
+        },
+        {
+            controllable: false,
+            reason: '정숙 마음대로',
+            detail: '추천받아도 검색할지 말지는 정숙 맘이에요.'
+        },
+        {
+            controllable: false,
+            reason: '정숙 마음대로',
+            detail: '친구 결과를 믿을지 말지도 정숙이 판단합니다.'
+        },
+        {
+            controllable: true,
+            reason: '후기/결과물 관리',
+            detail: '친구가 보여줄 수 있는 결과물의 퀄리티를 높여두면 됩니다.'
+        },
+        {
+            controllable: true,
+            reason: '예약 프로세스',
+            detail: '소개받은 분 전용 혜택이나 프로세스를 미리 준비할 수 있어요.'
+        }
+    ],
+    kakao: [
+        {
+            controllable: false,
+            reason: '정숙이 검색해야 시작',
+            detail: '카카오톡 채널을 검색하거나 링크를 타고 와야 해요.'
+        },
+        {
+            controllable: false,
+            reason: '정숙 마음대로',
+            detail: '채널 추가할지 말지는 정숙 맘이에요.'
+        },
+        {
+            controllable: true,
+            reason: '자동응답 설계',
+            detail: '첫 인사, 자주 묻는 질문 답변을 미리 세팅해둘 수 있어요.'
+        },
+        {
+            controllable: true,
+            reason: '상담 퀄리티',
+            detail: '답변 속도, 말투, 정보 제공 방식을 미리 준비할 수 있습니다.'
+        },
+        {
+            controllable: true,
+            reason: '예약 프로세스',
+            detail: '예약 확정부터 리마인드까지 전체 흐름을 설계할 수 있어요.'
+        }
+    ],
+    unknown: [
+        {
+            controllable: false,
+            reason: '경로 불명',
+            detail: '어디서 왔는지 모르면 뭘 고쳐야 할지도 모릅니다.'
+        },
+        {
+            controllable: false,
+            reason: '경로 불명',
+            detail: '데이터가 없으면 개선도 불가능해요.'
+        },
+        {
+            controllable: false,
+            reason: '경로 불명',
+            detail: '그냥 운에 맡기는 상태입니다.'
+        },
+        {
+            controllable: true,
+            reason: '응대는 가능',
+            detail: '일단 문의가 오면 응대는 할 수 있어요.'
+        },
+        {
+            controllable: true,
+            reason: '예약은 가능',
+            detail: '예약 프로세스는 관리할 수 있습니다.'
+        }
+    ]
 };
 
 // DOM 요소
@@ -289,11 +433,17 @@ function showFinalResult(finalSurvival) {
 function renderControlView() {
     const journey = journeyThoughts[selectedChoice];
     const control = controllability[selectedChoice];
+    const details = controlDetails[selectedChoice];
 
     controlContainer.innerHTML = '';
 
     journey.forEach((step, index) => {
         const isControllable = control[index];
+        const detail = details[index];
+
+        // 노드 컨테이너 (노드 + 설명 포함)
+        const nodeWrapper = document.createElement('div');
+        nodeWrapper.className = 'control-node-wrapper';
 
         // 노드 생성
         const node = document.createElement('div');
@@ -314,10 +464,31 @@ function renderControlView() {
         node.appendChild(icon);
         node.appendChild(phaseEl);
         node.appendChild(actionEl);
-        controlContainer.appendChild(node);
+
+        // 상세 설명 카드
+        const detailCard = document.createElement('div');
+        detailCard.className = `control-detail ${isControllable ? 'controllable' : 'uncontrollable'}`;
+
+        const reasonEl = document.createElement('span');
+        reasonEl.className = 'detail-reason';
+        reasonEl.textContent = detail.reason;
+
+        const detailEl = document.createElement('p');
+        detailEl.className = 'detail-text';
+        detailEl.textContent = detail.detail;
+
+        detailCard.appendChild(reasonEl);
+        detailCard.appendChild(detailEl);
+
+        nodeWrapper.appendChild(node);
+        nodeWrapper.appendChild(detailCard);
+        controlContainer.appendChild(nodeWrapper);
 
         // 순차적 애니메이션
-        setTimeout(() => node.classList.add('visible'), index * 200);
+        setTimeout(() => {
+            node.classList.add('visible');
+            detailCard.classList.add('visible');
+        }, index * 300);
 
         // 화살표 (마지막 제외)
         if (index < journey.length - 1) {
@@ -326,7 +497,7 @@ function renderControlView() {
             arrow.innerHTML = '<span class="arrow">↓</span>';
             controlContainer.appendChild(arrow);
 
-            setTimeout(() => arrow.classList.add('visible'), index * 200 + 100);
+            setTimeout(() => arrow.classList.add('visible'), index * 300 + 150);
         }
     });
 
