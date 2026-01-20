@@ -521,19 +521,115 @@
         </div>
     </section>
 
+    <!-- =========================
+         VALIDATION 섹션 (블로그 검증 단계)
+         ========================= -->
+    <section id="validation-section" class="validation-section">
+        <div class="validation-wrap">
+            <div class="validation-header">
+                <p class="validation-kicker">VALIDATION</p>
+                <h2 class="validation-title">블로그는 검증 단계</h2>
+                <p class="validation-sub">
+                    블로그는 홍보 채널이 아니라, <span class="hl">고객의 의심을 해소하는 검증 장치</span>입니다.<br>
+                    이 단계가 비어 있으면 고객은 '판단 보류'를 선택하고, 대부분 조용히 이탈합니다.
+                </p>
+            </div>
+
+            <!-- 3컬럼 카드 -->
+            <div class="validation-cards">
+                <article class="validation-card">
+                    <h4 class="vcard-title">체험단</h4>
+                    <p class="vcard-body">
+                        돈을 주고 후기 <strong>'수량'</strong>을 확보하는 장치
+                    </p>
+                </article>
+                <article class="validation-card">
+                    <h4 class="vcard-title">기자단</h4>
+                    <p class="vcard-body">
+                        사진 제공 → 콘텐츠 배포로 <strong>'노출'</strong>을 보완하는 장치
+                    </p>
+                </article>
+                <article class="validation-card highlight">
+                    <div class="vcard-badge">필수</div>
+                    <h4 class="vcard-title">자사 블로그</h4>
+                    <p class="vcard-body">
+                        비용은 거의 안 들지만, <strong>주 2회</strong>가 기준입니다.<br>
+                        이 공간이 있어야 고객이 '판단할 근거'를 갖습니다.
+                    </p>
+                </article>
+            </div>
+
+            <!-- 강조 문장 박스 -->
+            <div class="validation-callout">
+                <p>
+                    체험단이 문제인 게 아닙니다.<br>
+                    하지만 샵이 직접 말하는 <span class="hl2">자사 블로그가 없으면</span><br>
+                    고객은 검증할 근거를 찾지 못하고 이탈합니다.
+                </p>
+            </div>
+
+            <!-- 자사블로그에 뭘 써야 하는지 -->
+            <div class="validation-what">
+                <h3 class="what-title">자사 블로그에 뭘 써야 할까요?</h3>
+                <ul class="what-list">
+                    <li>
+                        <span class="what-icon">01</span>
+                        <div class="what-content">
+                            <strong>기준 (신념·철학)</strong>
+                            <span>우리가 어떤 기준으로 운영되는지</span>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="what-icon">02</span>
+                        <div class="what-content">
+                            <strong>판단 과정 (전문성)</strong>
+                            <span>어떤 경우에 / 왜 이렇게 관리하는지</span>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="what-icon">03</span>
+                        <div class="what-content">
+                            <strong>운영자의 태도 (사람)</strong>
+                            <span>어떤 마음으로 고객을 대하는지</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- 마무리 한 줄 -->
+            <div class="validation-closing">
+                <p>
+                    가격은 기술이 아니라 <span class="hl">'신뢰의 총량'</span>으로 결정됩니다.<br>
+                    자사 블로그는 그 신뢰를 <strong>가장 오래, 가장 깊게</strong> 쌓는 구조입니다.
+                </p>
+            </div>
+        </div>
+    </section>
+
     <script src="script.js"></script>
     <script>
         // "하나 삐끗" 시뮬레이션
-        (function () {
+        document.addEventListener("DOMContentLoaded", function () {
             const btn = document.getElementById("breakOne");
-            if (!btn) return;
+            if (!btn) {
+                console.log("breakOne button not found");
+                return;
+            }
 
             let toggled = false;
 
-            btn.addEventListener("click", () => {
-                const rows = document.querySelectorAll("#system-bridge .bar-row .bar i");
-                const vals = document.querySelectorAll("#system-bridge .bar-row .bar-val");
-                if (!rows.length || !vals.length) return;
+            btn.addEventListener("click", function() {
+                console.log("Button clicked!");
+                const probBars = document.querySelector(".prob-bars");
+                if (!probBars) {
+                    console.log("prob-bars not found");
+                    return;
+                }
+
+                const rows = probBars.querySelectorAll(".bar i");
+                const vals = probBars.querySelectorAll(".bar-val");
+
+                console.log("rows:", rows.length, "vals:", vals.length);
 
                 if (!toggled) {
                     const widths = ["100%", "32%", "12%", "3%", "1%"];
@@ -551,7 +647,7 @@
                     toggled = false;
                 }
             });
-        })();
+        });
     </script>
 </body>
 </html>
