@@ -1627,6 +1627,249 @@ body {
     transform: translateY(-2px);
 }
 
+/* =========================
+   인터랙티브 퍼널 시뮬레이션
+   ========================= */
+.simulation-section {
+    margin-top: 30px;
+    padding: 28px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sim-header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.sim-title {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 8px;
+    color: #fc8181;
+}
+
+.sim-desc {
+    font-size: 14px;
+    opacity: 0.8;
+    line-height: 1.5;
+}
+
+/* 단계 선택 토글 버튼 */
+.sim-toggles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.sim-toggle {
+    padding: 10px 18px;
+    border-radius: 25px;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.sim-toggle:hover {
+    border-color: rgba(79, 209, 197, 0.5);
+    background: rgba(79, 209, 197, 0.1);
+}
+
+.sim-toggle.active {
+    border-color: #fc8181;
+    background: rgba(252, 129, 129, 0.2);
+    color: #fc8181;
+    box-shadow: 0 0 15px rgba(252, 129, 129, 0.3);
+}
+
+/* 설명 문구 영역 */
+.sim-explanation {
+    min-height: 60px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    border-radius: 14px;
+    background: rgba(0, 0, 0, 0.2);
+    border-left: 3px solid rgba(252, 129, 129, 0.5);
+    transition: all 0.3s ease;
+}
+
+.sim-explanation p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.sim-exp-default {
+    color: #a0aec0;
+    font-style: italic;
+}
+
+.sim-exp-title {
+    font-weight: 700;
+    color: #fc8181;
+    margin-bottom: 6px !important;
+    font-size: 15px !important;
+}
+
+.sim-exp-detail {
+    color: #e2e8f0;
+    opacity: 0.9;
+}
+
+/* 퍼널 바 차트 */
+.sim-funnel {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.sim-bar-row {
+    display: grid;
+    grid-template-columns: 55px 1fr 50px;
+    gap: 12px;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.02);
+    transition: all 0.4s ease;
+}
+
+.sim-bar-row.leaked {
+    opacity: 0.4;
+    background: rgba(252, 129, 129, 0.08);
+}
+
+.sim-bar-row.broken {
+    border: 2px dashed #fc8181;
+    background: rgba(252, 129, 129, 0.15);
+}
+
+.sim-bar-label {
+    font-size: 13px;
+    font-weight: 600;
+    opacity: 0.9;
+}
+
+.sim-bar {
+    height: 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+}
+
+.sim-bar-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #4fd1c5, #48bb78);
+    transition: width 0.5s ease, background 0.3s ease;
+}
+
+.sim-bar-row.leaked .sim-bar-fill {
+    background: linear-gradient(90deg, #a0aec0, #718096);
+}
+
+.sim-bar-row.broken .sim-bar-fill {
+    background: linear-gradient(90deg, #fc8181, #e53e3e);
+    width: 0% !important;
+}
+
+.sim-bar-val {
+    font-size: 14px;
+    font-weight: 700;
+    text-align: right;
+    transition: color 0.3s ease;
+}
+
+.sim-bar-row.leaked .sim-bar-val {
+    color: #a0aec0;
+}
+
+.sim-bar-row.broken .sim-bar-val {
+    color: #fc8181;
+}
+
+/* 리셋 버튼 */
+.sim-reset-btn {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px solid rgba(79, 209, 197, 0.4);
+    background: rgba(79, 209, 197, 0.1);
+    color: #4fd1c5;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.sim-reset-btn.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.sim-reset-btn:hover {
+    background: rgba(79, 209, 197, 0.2);
+    transform: translateY(-2px);
+}
+
+/* 시뮬레이션 반응형 */
+@media (max-width: 768px) {
+    .simulation-section {
+        padding: 20px;
+    }
+
+    .sim-title {
+        font-size: 16px;
+    }
+
+    .sim-desc {
+        font-size: 13px;
+    }
+
+    .sim-toggles {
+        gap: 8px;
+    }
+
+    .sim-toggle {
+        padding: 8px 14px;
+        font-size: 13px;
+    }
+
+    .sim-explanation {
+        padding: 14px 16px;
+        min-height: 50px;
+    }
+
+    .sim-bar-row {
+        grid-template-columns: 50px 1fr 45px;
+        gap: 8px;
+        padding: 6px 10px;
+    }
+
+    .sim-bar-label {
+        font-size: 12px;
+    }
+
+    .sim-bar {
+        height: 12px;
+    }
+
+    .sim-bar-val {
+        font-size: 12px;
+    }
+}
+
 /* 채널 역할 카드 */
 .channels {
     margin-top: 40px;

@@ -411,46 +411,68 @@
                     </div>
                 </div>
 
-                <div class="prob-section">
-                    <div class="prob-left">
-                        <div class="prob-title">한 단계라도 빠지면?</div>
-                        <div class="prob-desc">
-                            "끝"이 아니라 <span class="hl2">확률이 줄어듭니다.</span><br />
-                            누적되면 체감상 '손님이 안 오는' 상태가 됩니다.
+                <!-- 인터랙티브 시뮬레이션 섹션 -->
+                <div class="simulation-section" id="funnelSimulation">
+                    <div class="sim-header">
+                        <div class="sim-title">한 단계가 비면 어떻게 될까요?</div>
+                        <div class="sim-desc">아래 단계를 클릭해서 "그 단계가 비었을 때" 시나리오를 확인해보세요.</div>
+                    </div>
+
+                    <!-- 단계 선택 토글 버튼 -->
+                    <div class="sim-toggles">
+                        <button class="sim-toggle" data-stage="0">노출</button>
+                        <button class="sim-toggle" data-stage="1">탐색</button>
+                        <button class="sim-toggle" data-stage="2">검증</button>
+                        <button class="sim-toggle" data-stage="3">확신</button>
+                        <button class="sim-toggle" data-stage="4">예약</button>
+                    </div>
+
+                    <!-- 설명 문구 영역 -->
+                    <div class="sim-explanation" id="simExplanation">
+                        <p class="sim-exp-default">단계를 선택하면 해당 구간이 비었을 때의 시나리오를 보여드립니다.</p>
+                    </div>
+
+                    <!-- 퍼널 바 차트 -->
+                    <div class="sim-funnel">
+                        <div class="sim-bar-row" data-index="0">
+                            <span class="sim-bar-label">노출</span>
+                            <div class="sim-bar">
+                                <div class="sim-bar-fill" style="width: 100%"></div>
+                            </div>
+                            <span class="sim-bar-val">100%</span>
+                        </div>
+                        <div class="sim-bar-row" data-index="1">
+                            <span class="sim-bar-label">탐색</span>
+                            <div class="sim-bar">
+                                <div class="sim-bar-fill" style="width: 40%"></div>
+                            </div>
+                            <span class="sim-bar-val">40%</span>
+                        </div>
+                        <div class="sim-bar-row" data-index="2">
+                            <span class="sim-bar-label">검증</span>
+                            <div class="sim-bar">
+                                <div class="sim-bar-fill" style="width: 25%"></div>
+                            </div>
+                            <span class="sim-bar-val">25%</span>
+                        </div>
+                        <div class="sim-bar-row" data-index="3">
+                            <span class="sim-bar-label">확신</span>
+                            <div class="sim-bar">
+                                <div class="sim-bar-fill" style="width: 8%"></div>
+                            </div>
+                            <span class="sim-bar-val">8%</span>
+                        </div>
+                        <div class="sim-bar-row" data-index="4">
+                            <span class="sim-bar-label">예약</span>
+                            <div class="sim-bar">
+                                <div class="sim-bar-fill" style="width: 3%"></div>
+                            </div>
+                            <span class="sim-bar-val">3%</span>
                         </div>
                     </div>
 
-                    <div class="prob-bars" aria-label="conversion probability">
-                        <div class="bar-row">
-                            <span class="bar-label">노출</span>
-                            <div class="bar"><i style="width:100%"></i></div>
-                            <span class="bar-val">100%</span>
-                        </div>
-                        <div class="bar-row">
-                            <span class="bar-label">클릭</span>
-                            <div class="bar"><i style="width:40%"></i></div>
-                            <span class="bar-val">40%</span>
-                        </div>
-                        <div class="bar-row">
-                            <span class="bar-label">체류</span>
-                            <div class="bar"><i style="width:25%"></i></div>
-                            <span class="bar-val">25%</span>
-                        </div>
-                        <div class="bar-row">
-                            <span class="bar-label">문의</span>
-                            <div class="bar"><i style="width:8%"></i></div>
-                            <span class="bar-val">8%</span>
-                        </div>
-                        <div class="bar-row">
-                            <span class="bar-label">예약</span>
-                            <div class="bar"><i style="width:3%"></i></div>
-                            <span class="bar-val">3%</span>
-                        </div>
-
-                        <button class="prob-btn" type="button" id="breakOne">
-                            "하나 삐끗" 시뮬레이션 보기
-                        </button>
-                    </div>
+                    <!-- 리셋 버튼 -->
+                    <button class="sim-reset-btn" id="simResetBtn">원래 상태로 돌리기</button>
                 </div>
             </div>
 
@@ -725,45 +747,132 @@
 
     <script src="script.js"></script>
     <script>
-        // "하나 삐끗" 시뮬레이션
+        // 인터랙티브 퍼널 시뮬레이션
         document.addEventListener("DOMContentLoaded", function () {
-            const btn = document.getElementById("breakOne");
-            if (!btn) {
-                console.log("breakOne button not found");
-                return;
+            // 기본 퍼널 수치
+            const baseValues = [100, 40, 25, 8, 3];
+            const stageNames = ['노출', '탐색', '검증', '확신', '예약'];
+
+            // 각 단계가 비었을 때의 설명
+            const explanations = {
+                0: {
+                    title: '노출이 비면:',
+                    detail: '고객이 우리 샵의 존재 자체를 모릅니다. 아무리 좋은 서비스도 보이지 않으면 의미가 없어요.'
+                },
+                1: {
+                    title: '탐색이 비면:',
+                    detail: '프로필/홈페이지가 허술하면 고객이 0.5초 만에 스크롤합니다. 첫인상에서 관심을 못 끌면 끝이에요.'
+                },
+                2: {
+                    title: '검증이 비면:',
+                    detail: '고객이 판단 근거를 못 찾아 다음 단계 확률이 급격히 떨어집니다. 후기/정보 부족 = 신뢰 부족.'
+                },
+                3: {
+                    title: '확신이 비면:',
+                    detail: '관심은 있는데 "여기가 맞나?" 확신이 안 서서 이탈합니다. 마지막 한 끗 차이로 놓쳐요.'
+                },
+                4: {
+                    title: '예약이 비면:',
+                    detail: '예약 프로세스가 복잡하거나 응대가 느리면 확신이 있어도 포기합니다. 문턱에서 돌아가요.'
+                }
+            };
+
+            // DOM 요소
+            const toggles = document.querySelectorAll('.sim-toggle');
+            const explanationEl = document.getElementById('simExplanation');
+            const barRows = document.querySelectorAll('.sim-bar-row');
+            const resetBtn = document.getElementById('simResetBtn');
+
+            let currentStage = null;
+
+            // 퍼널 리셋 함수
+            function resetFunnel() {
+                currentStage = null;
+
+                // 토글 버튼 리셋
+                toggles.forEach(btn => btn.classList.remove('active'));
+
+                // 설명 리셋
+                explanationEl.innerHTML = '<p class="sim-exp-default">단계를 선택하면 해당 구간이 비었을 때의 시나리오를 보여드립니다.</p>';
+
+                // 바 리셋
+                barRows.forEach((row, idx) => {
+                    row.classList.remove('leaked', 'broken');
+                    const fill = row.querySelector('.sim-bar-fill');
+                    const val = row.querySelector('.sim-bar-val');
+                    fill.style.width = baseValues[idx] + '%';
+                    val.textContent = baseValues[idx] + '%';
+                });
+
+                // 리셋 버튼 숨기기
+                resetBtn.classList.remove('visible');
             }
 
-            let toggled = false;
+            // 시뮬레이션 적용 함수
+            function applySimulation(brokenStage) {
+                currentStage = brokenStage;
 
-            btn.addEventListener("click", function() {
-                console.log("Button clicked!");
-                const probBars = document.querySelector(".prob-bars");
-                if (!probBars) {
-                    console.log("prob-bars not found");
-                    return;
-                }
+                // 토글 버튼 업데이트
+                toggles.forEach((btn, idx) => {
+                    btn.classList.toggle('active', idx === brokenStage);
+                });
 
-                const rows = probBars.querySelectorAll(".bar i");
-                const vals = probBars.querySelectorAll(".bar-val");
+                // 설명 업데이트
+                const exp = explanations[brokenStage];
+                explanationEl.innerHTML = `
+                    <p class="sim-exp-title">${exp.title}</p>
+                    <p class="sim-exp-detail">${exp.detail}</p>
+                `;
 
-                console.log("rows:", rows.length, "vals:", vals.length);
+                // 바 업데이트
+                const decayFactor = 0.4; // 감소 비율
+                let currentValue = 100;
 
-                if (!toggled) {
-                    const widths = ["100%", "32%", "12%", "3%", "1%"];
-                    const numbers = ["100%", "32%", "12%", "3%", "1%"];
-                    rows.forEach((el, idx) => (el.style.width = widths[idx] || el.style.width));
-                    vals.forEach((el, idx) => (el.textContent = numbers[idx] || el.textContent));
-                    btn.textContent = "원래 상태로 돌리기";
-                    toggled = true;
-                } else {
-                    const widths = ["100%", "40%", "25%", "8%", "3%"];
-                    const numbers = ["100%", "40%", "25%", "8%", "3%"];
-                    rows.forEach((el, idx) => (el.style.width = widths[idx] || el.style.width));
-                    vals.forEach((el, idx) => (el.textContent = numbers[idx] || el.textContent));
-                    btn.textContent = ""하나 삐끗" 시뮬레이션 보기";
-                    toggled = false;
-                }
+                barRows.forEach((row, idx) => {
+                    const fill = row.querySelector('.sim-bar-fill');
+                    const val = row.querySelector('.sim-bar-val');
+
+                    row.classList.remove('leaked', 'broken');
+
+                    if (idx === brokenStage) {
+                        // 해당 단계는 "broken" 상태
+                        row.classList.add('broken');
+                        fill.style.width = '0%';
+                        val.textContent = '0%';
+                        currentValue = 0;
+                    } else if (idx > brokenStage) {
+                        // 이후 단계는 "leaked" 상태 - 급격히 감소
+                        row.classList.add('leaked');
+                        const reducedValue = Math.round(baseValues[idx] * decayFactor);
+                        fill.style.width = reducedValue + '%';
+                        val.textContent = reducedValue + '%';
+                    } else {
+                        // 이전 단계는 정상
+                        fill.style.width = baseValues[idx] + '%';
+                        val.textContent = baseValues[idx] + '%';
+                    }
+                });
+
+                // 리셋 버튼 보이기
+                resetBtn.classList.add('visible');
+            }
+
+            // 토글 버튼 이벤트
+            toggles.forEach((btn, idx) => {
+                btn.addEventListener('click', function() {
+                    if (currentStage === idx) {
+                        // 같은 버튼 다시 클릭하면 리셋
+                        resetFunnel();
+                    } else {
+                        applySimulation(idx);
+                    }
+                });
             });
+
+            // 리셋 버튼 이벤트
+            if (resetBtn) {
+                resetBtn.addEventListener('click', resetFunnel);
+            }
         });
     </script>
 </body>
