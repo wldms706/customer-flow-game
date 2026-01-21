@@ -2594,3 +2594,69 @@ body {
         font-size: 15px;
     }
 }
+
+/* =========================
+   CTA 섹션
+   ========================= */
+.cta-section {
+    padding: 60px 20px 80px;
+    text-align: center;
+}
+
+.cta-wrap {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 40px 30px;
+    background: linear-gradient(135deg, rgba(252, 129, 129, 0.15), rgba(245, 158, 11, 0.15));
+    border: 2px solid rgba(252, 129, 129, 0.4);
+    border-radius: 24px;
+}
+
+.cta-message {
+    font-size: 20px;
+    line-height: 1.7;
+    color: #fff;
+    margin-bottom: 30px;
+}
+
+.cta-message .hl {
+    color: #fc8181;
+    font-weight: 700;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: 18px 50px;
+    background: linear-gradient(135deg, #fc8181, #f59e0b);
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(252, 129, 129, 0.4);
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(252, 129, 129, 0.6);
+}
+
+@media (max-width: 480px) {
+    .cta-section {
+        padding: 40px 16px 60px;
+    }
+
+    .cta-wrap {
+        padding: 30px 20px;
+    }
+
+    .cta-message {
+        font-size: 17px;
+    }
+
+    .cta-button {
+        padding: 16px 40px;
+        font-size: 16px;
+    }
+}
