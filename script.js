@@ -114,8 +114,8 @@ const controlDetails = {
         },
         {
             controllable: 'partial',
-            reason: '광고비로 부분 통제',
-            detail: '상위 노출은 네이버가 결정하지만, 광고비를 쓰면 어느 정도 올라갈 수 있어요.'
+            reason: '플레이스 관리로 부분 통제',
+            detail: '상위 노출은 네이버가 결정하지만, 고객 리뷰 관리와 플레이스 기능을 적극 활용하면 순위를 올릴 수 있어요.'
         },
         {
             controllable: false,
