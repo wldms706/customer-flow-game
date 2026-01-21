@@ -887,6 +887,12 @@ body {
     box-shadow: 0 0 20px rgba(72, 187, 120, 0.4);
 }
 
+.journey-node.partial {
+    background: linear-gradient(135deg, #f6ad55, #dd6b20);
+    box-shadow: 0 0 20px rgba(246, 173, 85, 0.4);
+    opacity: 0.9;
+}
+
 .control-icon {
     font-size: 16px;
 }
@@ -927,6 +933,11 @@ body {
     border: 1px solid rgba(252, 129, 129, 0.2);
 }
 
+.control-detail.partial {
+    background: rgba(246, 173, 85, 0.15);
+    border: 1px solid rgba(246, 173, 85, 0.3);
+}
+
 .detail-reason {
     display: inline-block;
     font-size: 11px;
@@ -944,6 +955,11 @@ body {
 .control-detail.uncontrollable .detail-reason {
     background: rgba(252, 129, 129, 0.2);
     color: #fc8181;
+}
+
+.control-detail.partial .detail-reason {
+    background: rgba(246, 173, 85, 0.3);
+    color: #f6ad55;
 }
 
 .detail-text {
@@ -974,6 +990,10 @@ body {
 
 .icon-uncontrol {
     color: #fc8181;
+}
+
+.icon-partial {
+    color: #f6ad55;
 }
 
 .icon-control {

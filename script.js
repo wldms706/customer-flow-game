@@ -63,9 +63,9 @@ const conversionRates = {
     unknown: [100, '?', '?', '?', '?']
 };
 
-// 통제 가능 여부
+// 통제 가능 여부 (false = 통제불가, 'partial' = 부분통제, true = 통제가능)
 const controllability = {
-    naver: [false, false, false, true, true],
+    naver: [false, 'partial', false, true, true],
     instagram: [true, false, false, true, true, true],
     referral: [true, false, false, true, true],
     kakao: [false, false, true, true, true],
@@ -113,9 +113,9 @@ const controlDetails = {
             detail: '정숙이 "눈썹문신"을 검색해야 게임이 시작돼요. 이건 기다릴 수밖에 없습니다.'
         },
         {
-            controllable: false,
-            reason: '네이버 알고리즘',
-            detail: '상위 노출은 네이버가 결정해요. 광고비를 써도 1등 보장은 없습니다.'
+            controllable: 'partial',
+            reason: '광고비로 부분 통제',
+            detail: '상위 노출은 네이버가 결정하지만, 광고비를 쓰면 어느 정도 올라갈 수 있어요.'
         },
         {
             controllable: false,
@@ -465,8 +465,24 @@ function renderControlView() {
     controlContainer.innerHTML = '';
 
     journey.forEach((step, index) => {
-        const isControllable = control[index];
+        const controlStatus = control[index];
         const detail = details[index];
+
+        // 통제 상태 판별 (true, false, 'partial')
+        let nodeClass, iconText, detailClass;
+        if (controlStatus === true) {
+            nodeClass = 'controllable';
+            iconText = '⭕';
+            detailClass = 'controllable';
+        } else if (controlStatus === 'partial') {
+            nodeClass = 'partial';
+            iconText = '🔺';
+            detailClass = 'partial';
+        } else {
+            nodeClass = 'uncontrollable';
+            iconText = '❌';
+            detailClass = 'uncontrollable';
+        }
 
         // 노드 컨테이너 (노드 + 설명 포함)
         const nodeWrapper = document.createElement('div');
@@ -474,11 +490,11 @@ function renderControlView() {
 
         // 노드 생성
         const node = document.createElement('div');
-        node.className = `journey-node ${isControllable ? 'controllable' : 'uncontrollable'}`;
+        node.className = `journey-node ${nodeClass}`;
 
         const icon = document.createElement('span');
         icon.className = 'control-icon';
-        icon.textContent = isControllable ? '⭕' : '❌';
+        icon.textContent = iconText;
 
         const phaseEl = document.createElement('span');
         phaseEl.className = 'node-phase';
@@ -494,7 +510,7 @@ function renderControlView() {
 
         // 상세 설명 카드
         const detailCard = document.createElement('div');
-        detailCard.className = `control-detail ${isControllable ? 'controllable' : 'uncontrollable'}`;
+        detailCard.className = `control-detail ${detailClass}`;
 
         const reasonEl = document.createElement('span');
         reasonEl.className = 'detail-reason';
