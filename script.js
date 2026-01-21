@@ -230,8 +230,18 @@ const currentThoughtEl = document.getElementById('currentThought');
 const survivalFill = document.getElementById('survivalFill');
 const survivalText = document.getElementById('survivalText');
 
+// 오프닝 인트로 관련 요소
+const openingSection = document.getElementById('opening-intro');
+const gameContainer = document.getElementById('gameContainer');
+const startGameBtn = document.getElementById('startGameBtn');
+
 // 초기화
 function init() {
+    // 오프닝에서 게임 시작 버튼
+    if (startGameBtn) {
+        startGameBtn.addEventListener('click', startGame);
+    }
+
     choiceButtons.forEach(btn => {
         btn.addEventListener('click', handleChoice);
     });
@@ -240,6 +250,23 @@ function init() {
     toStep4Btn.addEventListener('click', () => goToStep(4));
     toStep5Btn.addEventListener('click', () => goToStep(5));
     restartBtn.addEventListener('click', restart);
+}
+
+// 게임 시작 (오프닝 → 게임 전환)
+function startGame() {
+    // 오프닝 섹션 숨기기
+    if (openingSection) {
+        openingSection.classList.remove('active');
+        openingSection.style.display = 'none';
+    }
+
+    // 게임 컨테이너 보이기
+    if (gameContainer) {
+        gameContainer.style.display = 'flex';
+    }
+
+    // 스크롤을 맨 위로
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // 선택 처리
